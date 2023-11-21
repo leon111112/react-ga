@@ -1,0 +1,22 @@
+name: Secrets and Environment Variables 
+
+on:
+  workflow_dispatch
+jobs:
+  top-secret:
+    runs-on: ubuntu-latest
+    env:
+      REACT_APP_GTAG_ID: ${{ secrets.REACT_APP_GTAG_ID }}
+    steps:
+      - name: GTAG_ID
+        run: echo "secrets.REACT_APP_GTAG_ID"
+      - name: Check out repository
+        uses: actions/checkout@v2
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+      - name: Install dependencies and build
+        run: |
+          npm ci
+          npm run build
